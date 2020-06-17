@@ -50,6 +50,7 @@ class Saml2Controller extends Controller
 
         $redirectUrl = $user->getIntendedUrl();
 
+        session()->flash('userObject', $user);
         if ($redirectUrl !== null) {
             return redirect($redirectUrl.'?id=testing');
         } else {
