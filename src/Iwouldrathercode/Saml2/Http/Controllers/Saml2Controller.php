@@ -46,6 +46,8 @@ class Saml2Controller extends Controller
         }
         */
         
+        logger()->error(json_decode($user));
+
         event(new Saml2LoginEvent($idpName, $user, $saml2Auth));
 
         $redirectUrl = $user->getIntendedUrl();
