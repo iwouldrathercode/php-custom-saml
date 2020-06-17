@@ -35,8 +35,7 @@ class Saml2Controller extends Controller
         $errors = $saml2Auth->acs();
         $user = $saml2Auth->getSaml2User();
 
-        dd($user);
-
+        /*
         if (!empty($errors)) {
             logger()->error('Saml2 error_detail', ['error' => $saml2Auth->getLastErrorReason()]);
             session()->flash('saml2_error_detail', [$saml2Auth->getLastErrorReason()]);
@@ -45,6 +44,7 @@ class Saml2Controller extends Controller
             session()->flash('saml2_error', $errors);
             return redirect(config('saml2_settings.errorRoute'));
         }
+        */
         
         event(new Saml2LoginEvent($idpName, $user, $saml2Auth));
 
