@@ -54,7 +54,7 @@ class Saml2Controller extends Controller
             return redirect($redirectUrl);
         } else {
             $loginRoute = config('saml2_settings.loginRoute');
-            return redirect()->route($loginRoute, ['id' => $user->getUserId()]);
+            return redirect($loginRoute.'?id='.$user->getUserId());
         }
     }
 
