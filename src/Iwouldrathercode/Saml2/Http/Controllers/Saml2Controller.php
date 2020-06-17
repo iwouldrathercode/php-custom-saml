@@ -51,15 +51,13 @@ class Saml2Controller extends Controller
         event(new Saml2LoginEvent($idpName, $user, $saml2Auth));
 
         $redirectUrl = $user->getIntendedUrl();
-
-        session()->flash('userObject', $user);
-        $userId = $user->getUserId();
-
+        $samlAssertion = json_encode($user->getRawSamlAssertion());
+        
         if ($redirectUrl !== null) {
-            return redirect($redirectUrl);
+            return redirect($redirectUrl.'?assertion='.$samlAssertion);
         } else {
             $loginRoute = config('saml2_settings.loginRoute');
-            return redirect($loginRoute);
+            return redirect($loginRoute.'?assertion='.$samlAssertion);
         }
     }
 
