@@ -33,6 +33,9 @@ class Saml2Controller extends Controller
     public function acs(Saml2Auth $saml2Auth, $idpName)
     {
         $errors = $saml2Auth->acs();
+        $user = $saml2Auth->getSaml2User();
+
+        logger()->error($user);
 
         if (!empty($errors)) {
             logger()->error('Saml2 error_detail', ['error' => $saml2Auth->getLastErrorReason()]);
@@ -42,8 +45,7 @@ class Saml2Controller extends Controller
             session()->flash('saml2_error', $errors);
             return redirect(config('saml2_settings.errorRoute'));
         }
-        $user = $saml2Auth->getSaml2User();
-
+        
         event(new Saml2LoginEvent($idpName, $user, $saml2Auth));
 
         $redirectUrl = $user->getIntendedUrl();
