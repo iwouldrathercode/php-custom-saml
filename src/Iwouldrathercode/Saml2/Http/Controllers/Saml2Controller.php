@@ -35,7 +35,7 @@ class Saml2Controller extends Controller
         $errors = $saml2Auth->acs();
         $user = $saml2Auth->getSaml2User();
 
-        logger()->error($user);
+        logger()->error(json_encode($user));
 
         if (!empty($errors)) {
             logger()->error('Saml2 error_detail', ['error' => $saml2Auth->getLastErrorReason()]);
