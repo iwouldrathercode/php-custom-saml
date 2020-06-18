@@ -32,6 +32,9 @@ class Saml2Controller extends Controller
      */
     public function acs(Saml2Auth $saml2Auth, $idpName)
     {
+        logger()->error(json_encode($saml2Auth));
+        logger()->error(json_encode($idpName));
+        
         $errors = $saml2Auth->acs();
         $user = $saml2Auth->getSaml2User();
 
