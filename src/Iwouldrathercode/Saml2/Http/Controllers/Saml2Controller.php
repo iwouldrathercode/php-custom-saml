@@ -51,7 +51,7 @@ class Saml2Controller extends Controller
         event(new Saml2LoginEvent($idpName, $user, $saml2Auth));
 
         $redirectUrl = $user->getIntendedUrl();
-        $samlAssertion = $user->getRawSamlAssertion();
+        $samlAssertion = urlencode($user->getRawSamlAssertion());
         
         if ($redirectUrl !== null) {
             return redirect($redirectUrl.'?assertion='.$samlAssertion);
