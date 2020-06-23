@@ -32,13 +32,8 @@ class Saml2Controller extends Controller
      */
     public function acs(Saml2Auth $saml2Auth, $idpName)
     {
-        logger()->error(json_encode($saml2Auth));
-        logger()->error(json_encode($idpName));
-        
         $errors = $saml2Auth->acs();
-        $user = $saml2Auth->getSaml2User();
-
-        /*
+        
         if (!empty($errors)) {
             logger()->error('Saml2 error_detail', ['error' => $saml2Auth->getLastErrorReason()]);
             session()->flash('saml2_error_detail', [$saml2Auth->getLastErrorReason()]);
@@ -47,9 +42,8 @@ class Saml2Controller extends Controller
             session()->flash('saml2_error', $errors);
             return redirect(config('saml2_settings.errorRoute'));
         }
-        */
-        
-        logger()->error(json_encode($user));
+
+        $user = $saml2Auth->getSaml2User();
 
         event(new Saml2LoginEvent($idpName, $user, $saml2Auth));
 
@@ -57,10 +51,10 @@ class Saml2Controller extends Controller
         $samlAssertion = $user->getRawSamlAssertion();
         
         if ($redirectUrl !== null) {
-            return redirect($redirectUrl.'?assertion='.$samlAssertion);
+            return redirect($redirectUrl);
         } else {
             $loginRoute = config('saml2_settings.loginRoute');
-            return redirect($loginRoute.'?assertion='.$samlAssertion);
+            return redirect($loginRoute);
         }
     }
 
