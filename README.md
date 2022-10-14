@@ -1,4 +1,4 @@
-## Laravel 5 - Saml2
+## iwouldrathercode/php-custom-saml
 
 [![Build Status](https://travis-ci.org/aacotroneo/laravel-saml2.svg)](https://travis-ci.org/aacotroneo/laravel-saml2)
 
